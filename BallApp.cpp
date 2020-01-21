@@ -1,33 +1,29 @@
-#include <random>
 #include "BallApp.h"
-#include "Timer.h"
+#include "Rand.h"
 #include "Ball.h"
 #include "BasketBall.h"
 #include "BaseBall.h"
 #include "TennisBall.h"
 
-using namespace std;
-
-BallApp::BallApp(){
+BallApp::BallApp()
+{
   setKeyboardListener(this);
   setMouseListener(this);
 }
 
-BallApp::~BallApp(){
+BallApp::~BallApp()
+{
 }
 
 void BallApp::init()
 {
-  random_device rnd;
-  uniform_int_distribution<int> d(0, 9);
-
   balls.resize(100);
 
   for (auto& b : balls) {
-    int p = d(rnd);
-    if (p < 1)
+    int r = Rand::range(0, 9); // 0〜9の乱数
+    if (r < 1)
       b = new BasketBall;
-    else if (p < 5)
+    else if (r < 4)
       b = new BaseBall;
     else
       b = new TennisBall;
@@ -60,21 +56,20 @@ void BallApp::clean()
   }
 }  
 
-void BallApp::onKeyDown(sf::Keyboard::Key key){
-  if (key==sf::Keyboard::Escape){
+void BallApp::onKeyDown(sf::Keyboard::Key key)
+{
+  if (key==sf::Keyboard::Escape)
     window.close();
-  }
 }
 
-void BallApp::onMouseMoved(sf::Event::MouseMoveEvent mouse){
+void BallApp::onMouseMoved(sf::Event::MouseMoveEvent mouse)
+{
+} 
+
+void BallApp::onClick(sf::Event::MouseButtonEvent mouse)
+{
 }
 
-void BallApp::onClick(sf::Event::MouseButtonEvent mouse){
+void BallApp::offClick(sf::Event::MouseButtonEvent mouse)
+{
 }
-
-void BallApp::offClick(sf::Event::MouseButtonEvent mouse){
-}
-
-
-
-
